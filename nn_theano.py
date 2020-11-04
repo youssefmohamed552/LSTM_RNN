@@ -59,6 +59,13 @@ class NeuralNetwork:
     grad = T.grad(cost, parameters)
     return cost, grad
 
+  def drop_out(self, probability):
+    for w in self.ws:
+      weights = w.get_value()
+      f = np.random.binomial([np.ones(weights.shape)], 1-probability)[0]
+      new_weight = np.multiply(weights, f)
+      w.set_value(new_weight)
+
 
     # self.test = function(
       # inputs = [self.x, self.a_hat],
